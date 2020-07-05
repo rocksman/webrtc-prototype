@@ -1,8 +1,18 @@
 //requires
+const crypto = require('crypto')
 const express = require('express');
 const app = express();
-var http = require('http').Server(app);
+var http = require('http');
+var https = require('https');
 var io = require('socket.io')(http);
+
+var privateKey = fs.readFileSync('./certificates/privatekey.pem').toString();
+var certificate = fs.readFileSync('./certificates/certificate.pem').toString();
+
+var credentials = {key: privateKey, cert: certificate};
+
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
 
 const port = process.env.PORT || 7777;
 
@@ -51,7 +61,13 @@ io.on('connection', function (socket) {
 
 });
 
+
+
 // listener
-http.listen(port || 3000, function () {
+httpServer.listen(port || 7000, function () {
     console.log('listening on', port);
+});
+
+httpsServer.listen(port || 7433, function () {
+    console.log('HTTPS listening on', port);
 });
