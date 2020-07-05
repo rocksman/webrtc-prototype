@@ -1,5 +1,6 @@
 //requires
 const crypto = require('crypto')
+var fs = require('fs');
 const express = require('express');
 const app = express();
 var http = require('http');
@@ -14,7 +15,7 @@ var credentials = {key: privateKey, cert: certificate};
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
-const port = process.env.PORT || 7777;
+// const port = process.env.PORT || 7777;
 
 // express routing
 app.use(express.static('public'));
@@ -64,10 +65,10 @@ io.on('connection', function (socket) {
 
 
 // listener
-httpServer.listen(port || 7000, function () {
-    console.log('listening on', port);
+httpServer.listen(7000, function () {
+    console.log('listening on', 7000);
 });
 
-httpsServer.listen(port || 7433, function () {
-    console.log('HTTPS listening on', port);
+httpsServer.listen(7433, function () {
+    console.log('HTTPS listening on', 7433);
 });
