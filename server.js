@@ -5,7 +5,6 @@ const express = require('express');
 const app = express();
 var http = require('http');
 var https = require('https');
-var io = require('socket.io')(http);
 
 var privateKey = fs.readFileSync('./certificates/privatekey.pem').toString();
 var certificate = fs.readFileSync('./certificates/certificate.pem').toString();
@@ -15,6 +14,8 @@ var credentials = {key: privateKey, cert: certificate};
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
+
+var io = require('socket.io')(httpsServer);
 // const port = process.env.PORT || 7777;
 
 // express routing
